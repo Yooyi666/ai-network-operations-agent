@@ -1,0 +1,22 @@
+{
+  "status": "synthetic_laboratory_validation",
+  "dataset_sha256": "2cd6bc6779ce12b13251b6b8c47b0c0e842bb56906a576d80a8b99638690b992",
+  "model": "gpt-4.1-mini",
+  "samples": 30,
+  "raw_correct": 29,
+  "accepted": 29,
+  "accepted_correct": 29,
+  "human_review_or_failed": 1,
+  "execution_failures": 0,
+  "incorrectly_accepted": 0,
+  "latency_ms": {
+    "mean": 4148.75,
+    "p50": 3294.03,
+    "p95_nearest_rank": 9055.77,
+    "max": 13595.53
+  },
+  "avg_tool_calls": 1.53,
+  "avg_http_requests": 4.6,
+  "cache": "off",
+  "limitations": "Synthetic sample (n=30); not production quality, robust population p95, or a 200-case OpenAI benchmark."
+}
