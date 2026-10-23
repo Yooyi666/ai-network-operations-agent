@@ -1,0 +1,19 @@
+.git
+.github
+.venv
+.env
+.env.*
+!.env.example
+__pycache__
+.pytest_cache
+*.pyc
+*.pyo
+*.egg-info
+results
+backups
+build
+dist
+tests
+# Only the public synthetic demo dataset is packaged in the image.
+data/*.jsonl
+!data/incidents_v1.jsonl

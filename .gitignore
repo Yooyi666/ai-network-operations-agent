@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.env
+.env.*
+!.env.example
+*.egg-info/
+.coverage
+build/
+dist/
+results/
+backups/
+# Keep the tracked, public sample dataset only.
+data/incidents_*.jsonl
+!data/incidents_v1.jsonl
+.vscode/
+.idea/
+
+# Local development / temporary files
+.mypy_cache/
+.ruff_cache/
+*.bak
+*.log
+*.sqlite3

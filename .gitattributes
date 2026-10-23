@@ -1,0 +1,10 @@
+# Consistent text formatting across Windows, Linux, and GitHub Actions
+* text=auto
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.md text eol=lf
+Dockerfile text eol=lf

@@ -1,0 +1,53 @@
+# Local synthetic-lab deployment, not a production network operations service.
+services:
+  simulator:
+    build: .
+    image: netops-agent-lab:local
+    environment:
+      INCIDENT_DATASET: /app/data/incidents_v1.jsonl
+    ports:
+      - "127.0.0.1:8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).read()"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+    restart: unless-stopped
+
+  # An on-demand diagnostic CLI, not a long-running server.
+  # docker compose run --rm agent --incident-id INC-0001 --mode mock --cache redis
+  agent:
+    profiles: ["demo"]
+    build: .
+    image: netops-agent-lab:local
+    entrypoint: ["python", "scripts/run_agent.py"]
+    environment:
+      NETOPS_API_BASE_URL: http://simulator:8000
+      REDIS_URL: redis://redis:6379/0
+      NETOPS_MODEL_NAME: ${NETOPS_MODEL_NAME:-gpt-4.1-mini}
+      # For a LOCAL billed demo only. Keys in container environment are visible
+      # to users who can inspect Docker containers. Never use this for production.
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    depends_on:
+      simulator:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  redis_data:
